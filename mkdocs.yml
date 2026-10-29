@@ -26,6 +26,7 @@ nav:
       - Pure Pursuit 与速度规划实验: tracking/pure-pursuit-experiments.md
   - ROS 2 系统集成:
       - 环境与实验: ros2/index.md
+      - Hybrid A* 与车辆仿真: ros2/ackermann-ros2-simulation.md
   - 科研日志:
       - 研究进度: research/index.md
 
