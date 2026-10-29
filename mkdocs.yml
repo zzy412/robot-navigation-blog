@@ -1,0 +1,38 @@
+
+site_name: 机器人运动规划与导航学习笔记
+site_description: Robotics Motion Planning and Navigation
+site_author: Robotics Research Notes
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - 首页: index.md
+  - 运动规划课程:
+      - 课程总览: courses/index.md
+  - 科研论文精读:
+      - 论文阅读: papers/index.md
+  - C++ 算法实现:
+      - 算法实验: algorithms/index.md
+      - A* 与 Hybrid A* 路径规划: algorithms/hybrid-a-star.md
+  - 轨迹跟踪实验:
+      - 控制实验: tracking/index.md
+  - ROS 2 系统集成:
+      - 环境与实验: ros2/index.md
+  - 科研日志:
+      - 研究进度: research/index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
