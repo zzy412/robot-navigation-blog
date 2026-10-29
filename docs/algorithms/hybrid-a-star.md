@@ -89,11 +89,166 @@ Hybrid A* 在传统 A* 的基础上，将车辆航向角和运动学模型引入
 | PurePursuit | 车辆路径跟踪控制 |
 | Visualization | 实验结果可视化 |
 
-在二维地图中分别运行 A* 和 Hybrid A*，并利用 Pure Pursuit 对规划路径开展跟踪实验。
+## Hybrid A* 核心 C++ 实现解析
 
-![A*、Hybrid A* 与 Pure Pursuit 仿真结果](../images/hybrid_a_star.png)
+本节结合项目源码，介绍 Hybrid A* 中的状态表示、运动基元、启发式搜索和碰撞检测。
 
-*图1：基于 A*、Hybrid A* 与 Pure Pursuit 的路径规划及轨迹跟踪仿真结果*
+完整源码：[Robot-Motion-Planning](https://github.com/zzy412/Robot-Motion-Planning)
+
+### 1. 状态表示与离散化
+
+Hybrid A* 的搜索状态不仅包含二维坐标，还包含车辆航向角：
+
+$$
+\mathbf{s}=(x,y,\theta)
+$$
+
+本项目在 `HybridAStar.h` 中定义了规划参数：
+
+```cpp
+struct HybridConfig {
+    double xyResolution = 0.5;
+    double headingResolution = PI / 12;
+    double primitiveDuration = 0.8;
+    double dt = 0.05;
+    double speed = 1;
+    double maxSteer = PI / 6;
+    double goalPositionTolerance = 0.8;
+    double goalHeadingTolerance = PI / 12;
+    int maxExpanded = 130000;
+    bool allowReverse = true;
+};
+```
+
+其中：
+
+- `xyResolution`：位置状态离散化分辨率。
+- `headingResolution`：航向角离散化分辨率。
+- `primitiveDuration`：每个运动基元的持续时间。
+- `dt`：运动学积分时间步长。
+- `maxSteer`：最大前轮转向角。
+- `allowReverse`：是否允许倒车扩展。
+
+搜索时，将连续位置和航向角映射到离散状态索引，用于记录不同状态的最小已知搜索代价。
+
+### 2. 阿克曼车辆运动学
+
+车辆使用运动学自行车模型：
+
+$$
+\begin{aligned}
+\dot{x} &= v\cos\theta \\
+\dot{y} &= v\sin\theta \\
+\dot{\theta} &= \frac{v}{L}\tan\delta
+\end{aligned}
+$$
+
+在 `VehicleModel.cpp` 中，通过 `step()` 更新车辆状态，并使用 `propagate()` 连续生成运动基元上的采样状态。
+
+源码中对恒定速度、恒定转向角下的运动采用圆弧积分，而不是简单地逐步修改二维网格坐标。
+
+### 3. 运动基元生成
+
+在 `HybridAStar.cpp` 中，程序采用五种归一化转向输入：
+
+```cpp
+const double steering[5] = {
+    -1, -0.5, 0, 0.5, 1
+};
+```
+
+根据最大转向角，计算实际输入：
+
+```cpp
+double delta = angle * cfg.maxSteer;
+```
+
+车辆利用运动学模型向前或向后传播：
+
+```cpp
+auto segment = vehicle.propagate(
+    n.state,
+    dir * cfg.speed,
+    delta,
+    cfg.primitiveDuration,
+    cfg.dt
+);
+```
+
+因此，每次搜索扩展得到的不是简单的网格邻居，而是一段具有车辆运动学意义的短轨迹。
+
+### 4. 车辆碰撞检测
+
+在生成运动基元后，程序逐一检查轨迹采样点：
+
+```cpp
+bool free = true;
+
+for (const auto& s : segment) {
+    if (!map.poseFree(s)) {
+        free = false;
+        break;
+    }
+}
+
+if (!free) continue;
+```
+
+`GridMap.cpp` 使用考虑航向角的矩形车体与轴对齐矩形障碍物进行碰撞检测。
+
+这种方法比只检查车辆中心点更符合车辆外形，但由于采用离散采样，仍不能保证两个采样时刻之间绝对不会发生碰撞。
+
+### 5. 路径搜索代价
+
+程序的搜索代价主要考虑：
+
+1. 行驶路径长度。
+2. 倒车惩罚。
+3. 较大转向角的惩罚。
+4. 前进与倒车方向切换的惩罚。
+5. 相邻运动基元转向角变化的惩罚。
+
+这些代价共同引导搜索，使规划结果不仅关注路径长度，也考虑车辆运动过程中的控制特征。
+
+需要说明：程序对转向变化施加的是搜索代价惩罚，并不等价于严格的转向速率约束。
+
+### 6. 启发式函数
+
+当前程序使用位置到目标点的欧氏距离，并加入航向误差项：
+
+$$
+h = \sqrt{(x-x_g)^2+(y-y_g)^2}
++0.35|\operatorname{wrap}(\theta_g-\theta)|
+$$
+
+航向误差项有助于引导搜索向目标姿态靠近。
+
+不过，这种启发式函数不保证满足最优性所需的可采纳条件，因此当前实现不宣称能够找到全局最优路径。
+
+### 7. 终点判断与路径重建
+
+当车辆满足位置和航向容差时，搜索结束。
+
+随后，程序通过保存的父节点索引回溯搜索树，再拼接各个运动基元中的采样状态，形成完整的规划路径。
+
+当前实现使用容差终止，而不是精确的 Reeds–Shepp 解析连接。
+
+### 8. 源码地址
+
+- [HybridAStar.cpp](https://github.com/zzy412/Robot-Motion-Planning/blob/main/src/HybridAStar.cpp)
+- [HybridAStar.h](https://github.com/zzy412/Robot-Motion-Planning/blob/main/include/HybridAStar.h)
+- [VehicleModel.cpp](https://github.com/zzy412/Robot-Motion-Planning/blob/main/src/VehicleModel.cpp)
+- [GridMap.cpp](https://github.com/zzy412/Robot-Motion-Planning/blob/main/src/GridMap.cpp)
+
+通过以上实现，可以看到 Hybrid A* 如何将车辆运动学模型引入传统启发式搜索过程。
+
+下一阶段将进一步研究更严格的转向速率约束、解析扩展与路径优化。
+
+## 实验可视化
+
+![Hybrid A* 路径规划实验](../images/planning/hybrid_a_star.png)
+
+*图：A*、Hybrid A* 与 Pure Pursuit 轨迹跟踪实验结果。*
 
 ## 6. 实验结果与分析
 
