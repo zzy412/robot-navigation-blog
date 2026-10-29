@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#ros-2" class="md-skip">
           跳转至
         </a>
       
@@ -849,6 +849,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境与实验
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -865,6 +883,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1013,6 +1072,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1028,7 +1117,33 @@
 
 
 
-<h1 id="_1">待更新</h1>
+<h1 id="ros-2">ROS 2 系统集成</h1>
+<p>本栏目主要记录我将运动规划与车辆仿真实验迁移到 <strong>ROS 2 Jazzy</strong> 平台上的过程。</p>
+<p>在前期的独立 C++ 仿真基础上，我进一步在 Ubuntu / WSL2 环境下搭建了 ROS 2 工作空间，并实现了阿克曼无人车相关的基础节点。</p>
+<p>目前已经完成的工作包括：</p>
+<ul>
+<li>ROS 2 Jazzy 环境配置</li>
+<li><code>ackermann_navigation</code> 功能包创建</li>
+<li>Hybrid A* 路径规划节点</li>
+<li>车辆运动学仿真节点</li>
+<li>地图与路径发布</li>
+<li>RViz2 可视化显示</li>
+</ul>
+<p>通过这一阶段，我将原本离线运行的算法实验逐步迁移到机器人软件系统环境中，为后续开展在线闭环控制打下基础。</p>
+<h2 id="_1">当前文章</h2>
+<ul>
+<li><a href="ackermann-ros2-simulation/">Hybrid A* 与车辆仿真</a></li>
+</ul>
+<h2 id="_2">本栏目重点</h2>
+<p>本栏目后续将继续完善以下内容：</p>
+<ol>
+<li>ROS 2 功能包结构说明  </li>
+<li>规划节点与仿真节点的数据流  </li>
+<li>车辆状态发布与 RViz2 可视化  </li>
+<li>路径跟踪控制器接入  </li>
+<li>从离线仿真走向在线闭环控制  </li>
+</ol>
+<p>ROS 2 集成部分是将算法实验推进到系统级实现的重要环节。</p>
 
 
 

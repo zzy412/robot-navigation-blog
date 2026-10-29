@@ -734,6 +734,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    控制实验
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -750,6 +768,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1013,6 +1072,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1028,7 +1117,33 @@
 
 
 
-<h1 id="_1">待更新</h1>
+<h1 id="_1">轨迹跟踪实验</h1>
+<p>本栏目主要记录我在车辆轨迹跟踪控制方向上的实验与分析，重点研究阿克曼无人车如何沿规划路径稳定运动。</p>
+<p>在完成 A* 与 Hybrid A* 路径规划后，我进一步开展了基于 <strong>Pure Pursuit</strong> 的路径跟踪实验，用于分析车辆对参考路径的跟踪能力。</p>
+<p>目前已经完成的实验包括：</p>
+<ul>
+<li>Pure Pursuit 基础跟踪实验</li>
+<li>固定前瞻距离参数扫描</li>
+<li>自适应前瞻距离对比</li>
+<li>转向约束影响分析</li>
+<li>速度规划实验</li>
+<li>多场景跟踪性能评估</li>
+</ul>
+<p>这些实验说明：<strong>一条可规划的路径，并不一定能够被车辆高质量地跟踪</strong>。因此，路径规划与轨迹跟踪需要结合起来分析。</p>
+<h2 id="_2">当前文章</h2>
+<ul>
+<li><a href="pure-pursuit-experiments/">Pure Pursuit 与速度规划实验</a></li>
+</ul>
+<h2 id="_3">本栏目重点</h2>
+<p>本栏目后续将继续完善以下内容：</p>
+<ol>
+<li>Pure Pursuit 控制器原理  </li>
+<li>前瞻距离对跟踪误差的影响  </li>
+<li>自适应控制参数设计  </li>
+<li>转向速率与速度规划协同分析  </li>
+<li>多场景实验结果总结  </li>
+</ol>
+<p>该部分是从“路径规划”走向“完整运动控制系统”的关键一步。</p>
 
 
 

@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#c" class="md-skip">
           跳转至
         </a>
       
@@ -619,6 +619,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法实验
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -635,6 +653,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1013,6 +1072,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前文章
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本栏目重点
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1028,7 +1117,32 @@
 
 
 
-<h1 id="_1">待更新</h1>
+<h1 id="c">C++ 算法实现</h1>
+<p>本栏目主要记录我在机器人运动规划方向上的 C++ 算法实现与实验结果，重点围绕阿克曼转向无人车的路径规划与轨迹跟踪问题展开。</p>
+<p>目前，我已经基于 <strong>C++17 + CMake</strong> 完成了以下内容的初步实现：</p>
+<ul>
+<li>二维栅格地图建模</li>
+<li>A* 路径规划</li>
+<li>Hybrid A* 路径规划</li>
+<li>阿克曼车辆运动学建模</li>
+<li>碰撞检测</li>
+<li>路径可视化与实验结果输出</li>
+</ul>
+<p>与传统几何路径搜索相比，Hybrid A* 将车辆航向角和最小转弯半径等运动学约束纳入搜索过程，更适合阿克曼车辆的路径规划。</p>
+<h2 id="_1">当前文章</h2>
+<ul>
+<li><a href="hybrid-a-star/">A* 与 Hybrid A* 路径规划</a></li>
+</ul>
+<h2 id="_2">本栏目重点</h2>
+<p>本栏目后续将继续完善以下内容：</p>
+<ol>
+<li>Hybrid A* 核心源码解析  </li>
+<li>运动基元生成机制  </li>
+<li>启发式函数与搜索代价设计  </li>
+<li>碰撞检测实现  </li>
+<li>A* 与 Hybrid A* 的实验对比分析  </li>
+</ol>
+<p>本部分内容既服务于个人学习总结，也希望为后续毕业设计与科研工作积累基础。</p>
 
 
 
